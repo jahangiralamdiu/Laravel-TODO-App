@@ -10,7 +10,8 @@ class ProjectsController extends \BaseController {
 	 */
 	public function index()
 	{
-        return View::make('projects.index');
+        $projects = Project::all();
+        $this->layout->content = View::make('projects.index', compact('projects'));
 	}
 
 	/**
@@ -54,10 +55,10 @@ class ProjectsController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
-	{
-		//
-	}
+    public function edit(Project $project)
+    {
+        $this->layout->content = View::make('projects.show', compact('project'));
+    }
 
 	/**
 	 * Update the specified resource in storage.
