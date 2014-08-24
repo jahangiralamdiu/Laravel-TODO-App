@@ -1,1 +1,4 @@
-D:\TODO\app/views/tasks/show.blade.php
+@section('main')
+<h2>{{ $project->name }} - {{ $task->name }}</h2>
+{{ $task->description }}
+@stop
