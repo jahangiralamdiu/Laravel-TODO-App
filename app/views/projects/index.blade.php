@@ -7,12 +7,17 @@ You have no projects
     @foreach( $projects as $project )
     <li>
         <a href="{{ route('projects.show', $project->slug) }}">{{ $project->name }}</a>
-        (						{{ Form::open(array('class' => 'inline', 'method' => 'DELETE', 'route' => array('projects.destroy', $project->slug))) }}							{{ link_to_route('projects.edit', 'Edit', array($project->slug), array('class' => 'btn btn-info')) }}, 							{{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}						{{ Form::close() }}					)				</li>
+        ({{ Form::open(array('class' => 'inline', 'method' => 'DELETE', 'route' => array('projects.destroy', $project->slug))) }}
+        {{ link_to_route('projects.edit', 'Edit', array($project->slug), array('class' => 'btn btn-info')) }},
+        {{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}
+        {{ Form::close() }}	)
+    </li>
     @endforeach
 </ul>
 @endif
 
-<p>{{ link_to_route('projects.create', 'Create Project') }}</p>@stop
+<p>{{ link_to_route('projects.create', 'Create Project') }}</p>
+@stop
 
 <!-- /app/views/projects/show.blade.php -->
 @section('main')
@@ -34,7 +39,6 @@ Your project has no tasks.
 @endif
 
 <p>
-    {{ link_to_route('projects.index', 'Back to Projects') }} |
-    {{ link_to_route('projects.tasks.create', 'Create Task', $project->slug) }}
+    {{ link_to_route('projects.index', 'Back to Projects') }} | {{ link_to_route('projects.tasks.create', 'Create Task', $project->slug) }}
 </p>
 @stop

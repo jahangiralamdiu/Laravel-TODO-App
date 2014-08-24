@@ -61,6 +61,7 @@ class ProjectsController extends \BaseController {
     public function edit(Project $project)
     {
         $this->layout->content = View::make('projects.edit', compact('project'));
+
     }
 
 	/**
@@ -75,7 +76,7 @@ class ProjectsController extends \BaseController {
         $input = array_except(Input::all(), '_method');
         $project->update($input);
 
-        return Redirect::route('projects.show', $project->slug)->with('message', 'Project updated.');
+        return Redirect::route('projects.index')->with('message', 'Project updated.');
 	}
 
 	/**
