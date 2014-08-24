@@ -22,7 +22,7 @@ class ProjectsController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+        $this->layout->content = View::make('projects.create', compact('projects'));
 	}
 
 	/**
@@ -33,7 +33,10 @@ class ProjectsController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+        $input = Input::all();
+        Project::create( $input );
+
+        return Redirect::route('projects.index')->with('message', 'Project created');
 	}
 
 	/**
@@ -43,7 +46,7 @@ class ProjectsController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show(Project $project)
 	{
 		//
 	}
@@ -57,7 +60,7 @@ class ProjectsController extends \BaseController {
 	 */
     public function edit(Project $project)
     {
-        $this->layout->content = View::make('projects.show', compact('project'));
+        $this->layout->content = View::make('projects.edit', compact('project'));
     }
 
 	/**
@@ -67,9 +70,12 @@ class ProjectsController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(Project $project)
 	{
-		//
+        $input = array_except(Input::all(), '_method');
+        $project->update($input);
+
+        return Redirect::route('projects.show', $project->slug)->with('message', 'Project updated.');
 	}
 
 	/**
@@ -79,9 +85,11 @@ class ProjectsController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy(Project $project)
 	{
-		//
-	}
+        $project->delete();
+
+        return Redirect::route('projects.index')->with('message', 'Project deleted.');
+    }
 
 }

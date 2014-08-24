@@ -24,7 +24,11 @@ class TasksController extends BaseController {
      * @param  Project  $project	 * @return Response
      */
     public function store(Project $project)	{
-        //
+        $input = Input::all();
+        $input['project_id'] = $project->id;
+        Task::create( $input );
+
+        return Redirect::route('projects.show', $project->slug)->with('Task created.');
     }
 
     /**
@@ -49,7 +53,10 @@ class TasksController extends BaseController {
      * @param  Project  $project	 * @param  Task     $task	 * @return Response
      */
     public function update(Project $project, Task $task)	{
-        //
+        $input = array_except(Input::all(), '_method');
+        $task->update($input);
+
+        return Redirect::route('projects.tasks.show', [$project->slug, $task->slug])->with('message', 'Task updated.');
     }
 
     /**
@@ -58,7 +65,9 @@ class TasksController extends BaseController {
      * @param  Project  $project	 * @param  Task     $task	 * @return Response
      */
     public function destroy(Project $project, Task $task)	{
-        //
+        $task->delete();
+
+        return Redirect::route('projects.show', $project->slug)->with('message', 'Task deleted.');
     }
 
 }
